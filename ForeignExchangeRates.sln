@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.Core", "ForeignExchangeRates.Core\ForeignExchangeRates.Core.csproj", "{2D345A59-5705-4EE0-92D3-FF5D6C6E641F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.Core", "src\ForeignExchangeRates.Core\ForeignExchangeRates.Core.csproj", "{2D345A59-5705-4EE0-92D3-FF5D6C6E641F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.Infrastructure", "ForeignExchangeRates.Infrastructure\ForeignExchangeRates.Infrastructure.csproj", "{FFAB7C98-1EE9-47DA-B94C-34F7AF580947}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.Infrastructure", "src\ForeignExchangeRates.Infrastructure\ForeignExchangeRates.Infrastructure.csproj", "{FFAB7C98-1EE9-47DA-B94C-34F7AF580947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.WebAPI", "ForeignExchangeRates.WebAPI\ForeignExchangeRates.WebAPI.csproj", "{F23DDD5C-44F5-4DBF-BF8F-E64118F9FFFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForeignExchangeRates.WebAPI", "src\ForeignExchangeRates.WebAPI\ForeignExchangeRates.WebAPI.csproj", "{F23DDD5C-44F5-4DBF-BF8F-E64118F9FFFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
