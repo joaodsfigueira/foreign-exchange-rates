@@ -31,3 +31,9 @@ At this point you should be able to set the WebAPI project as startup project an
 At the root directory there is a paste called "postman" that contains an importable collection that can be used to test each endpoint.
 
 ![](https://files.readme.io/b7d2597504d7ddf101955dabddffa1e2cf594827cf99dfd20b1a03cde473b6ea-image.png)
+
+
+To improve: 
+- Add health checks
+- Add API Key validation
+- Add a cache mechanism 
