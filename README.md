@@ -1,6 +1,6 @@
-This is an ASP.NET Core Web API to perform CRUD operations that allows the management of foreign exchange rates. The endpoint retrieves the rates for a specific currency pair checks for the data in the system's database. If the data is not available, it will fetch from a third-party and save it on the database. Everytime that a new rate is added, an event is raised to a queue.
+This is an ASP.NET Core Web API for performing CRUD operations to manage foreign exchange rates. The endpoint retrieves rates for a specific currency pair and first checks the system's database for the data. If the data is unavailable, it fetches it from a third party and saves it to the database. Whenever a new rate is added, an event is raised and sent to a queue.
 
-This project was designed considering a domain-centric architecture.
+This project was designed with a domain-centric architecture in mind.
 
 # ⚙️ Setup
 
