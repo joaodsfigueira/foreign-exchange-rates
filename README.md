@@ -8,11 +8,11 @@ This project supports storing the data in-memory, but also in a real SQL Server 
 
 Using the "Database:UseInMemory" flag in the appsettings.json file (located in the WebAPI project), you can select the desired mode of operation. If set to false, the application will attempt to connect to the database engine, requiring you to specify the "Database:ConnectionString".
 
-![](https://files.readme.io/45e945f12677841d73266d2c5661138137a554a24fc4d591a38495ca75d928be-image.png)
+![](https://files.readme.io/4964ba182cbeed0fbb97f7cf2279796aa7cbd4ec0ea1518d83e2d722aa92f8c3-image.png)
 
 The same feature flag logic applies to event sourcing. If you don't want to use event sourcing, simply set "EventSourcing:Use" to false. In this case, the service will inject a "dummy" event sourcing implementation using dependency injection (DI). If you do want to use event sourcing, set the flag to true and also specify "EventSourcing:QueueName" and "EventSourcing:AzureServiceBus:ConnectionString".
 
-![](https://files.readme.io/34d8d10ebfbbe451efe884abfb9edabe5b840a19c0238e22463fc4016d76f3b9-image.png)
+![](https://files.readme.io/d5c346506c6513f7c8f82f4c04c4c4df3f9b172c4bf9abaca1c9a2a340eab4e4-image.png)
 
 The third-party API key is also configurable in appsettings.json and must be set before use. You can obtain one here: [https://www.alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key).
 
@@ -28,12 +28,18 @@ At this point you should be able to set the WebAPI project as startup project an
 
 ![](https://files.readme.io/a68205c2d899c4e68db496c72de6561204dc12dd4398993f9c56e64f2a622209-image.png)
 
+Each request should include a required header named "ApiKey". The value is configurable is the appsettings.json as well.
+
+![](https://files.readme.io/55b49069fc652a36cc100d0da496cc6541c6a44cec8efacd4ec9df49f058f005-image.png)
+
 At the root directory there is a paste called "postman" that contains an importable collection that can be used to test each endpoint.
 
 ![](https://files.readme.io/b7d2597504d7ddf101955dabddffa1e2cf594827cf99dfd20b1a03cde473b6ea-image.png)
 
 
-To improve: 
-- Add health checks
-- Add API Key validation
-- Add a cache mechanism 
+
+To improve in the future:
+
+Add health checks\
+Add API Key validation by user
+Add a cache mechanism
