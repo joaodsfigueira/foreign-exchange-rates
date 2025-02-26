@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "693def54-f56b-47e0-b9cd-479bb3a0a289",
+		"_postman_id": "44063fc4-418a-4eef-b250-b0968a7d3fdf",
 		"name": "Foreign Exchange Rates",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "42627687"
@@ -10,7 +10,13 @@
 			"name": "GET",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "ApiKey",
+						"value": "zas",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "https://localhost:7281/api/v1/exchange-rates/EUR/USD",
 					"protocol": "https",
@@ -33,7 +39,13 @@
 			"name": "INSERT",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "ApiKey",
+						"value": "zas",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"exchangeRateValue\": 1.0000,\r\n    \"bidPrice\": 1.0000,\r\n    \"askPrice\": 1.0000\r\n}",
@@ -65,7 +77,13 @@
 			"name": "UPDATE",
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "ApiKey",
+						"value": "zas",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"exchangeRateValue\": 2.0000,\r\n    \"bidPrice\": 2.0000,\r\n    \"askPrice\": 2.0000\r\n}",
@@ -97,7 +115,13 @@
 			"name": "DELETE",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "ApiKey",
+						"value": "zas",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "https://localhost:7281/api/v1/exchange-rates/EUR/USD",
 					"protocol": "https",

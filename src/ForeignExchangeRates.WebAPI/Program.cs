@@ -14,6 +14,9 @@ using AutoMapper;
 using ForeignExchangeRates.WebAPI.Automapper;
 using ForeignExchangeRates.Infrastructure.Automapper;
 using ForeignExchangeRates.WebAPI.Polly;
+using Microsoft.OpenApi.Models;
+using ForeignExchangeRates.WebAPI.Middlewares;
+using ForeignExchangeRates.WebAPI.OperationFilters;
 
 namespace ForeignExchangeRates.WebAPI;
 
@@ -77,23 +80,35 @@ public class Program
 		}
 		
 		builder.Services.AddControllers();
-		builder.Services.AddOpenApi();
+		builder.Services.AddOpenApi(ops => { 
+			ops.AddOperationTransformer((operation, context, cancellationToken) =>
+			{
+				operation.Parameters.Add(new OpenApiParameter()
+				{
+					Name = "ApiKey",
+					In = ParameterLocation.Header,
+					Required = true
+				});
+				return Task.CompletedTask;
+			});
+		});
+
+		builder.Services.AddSwaggerGen(c =>
+		{
+			c.SwaggerDoc("v1", new OpenApiInfo { Title = "Foreign Exchange Rates API", Version = "v1" });
+			c.OperationFilter<RequiredApiKeyHeaderParameter>();
+		});
 
 		var app = builder.Build();
 
-		if (app.Environment.IsDevelopment())
-		{
-			app.MapOpenApi();
-		}
-
-		app.UseSwaggerUI(options =>
-		{
-			options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI v1");
-		});
+		app.UseSwagger();
+		app.UseSwaggerUI();
 
 		app.UseHttpsRedirection();
 
 		app.UseAuthorization();
+
+		app.UseMiddleware<ApiKeyMiddleware>();
 
 		app.MapControllers();
 
