@@ -14,9 +14,12 @@ using AutoMapper;
 using ForeignExchangeRates.WebAPI.Automapper;
 using ForeignExchangeRates.Infrastructure.Automapper;
 using ForeignExchangeRates.WebAPI.Polly;
+using ForeignExchangeRates.WebAPI.Generators;
 using Microsoft.OpenApi.Models;
-using ForeignExchangeRates.WebAPI.Middlewares;
 using ForeignExchangeRates.WebAPI.OperationFilters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ForeignExchangeRates.WebAPI;
 
@@ -53,6 +56,10 @@ public class Program
 			ops.AddProfile<ModelsProfile>();
 			ops.AddProfile<AlphaVantageProfile>();
 		});
+
+		builder.Services.AddScoped<IAuthService, AuthService>();
+		builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+		builder.Services.AddScoped<IUserRepository, UserRepository>();
 		builder.Services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
 		builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
 		builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -80,24 +87,48 @@ public class Program
 		}
 		
 		builder.Services.AddControllers();
-		builder.Services.AddOpenApi(ops => { 
-			ops.AddOperationTransformer((operation, context, cancellationToken) =>
-			{
-				operation.Parameters.Add(new OpenApiParameter()
-				{
-					Name = "ApiKey",
-					In = ParameterLocation.Header,
-					Required = true
-				});
-				return Task.CompletedTask;
-			});
-		});
 
 		builder.Services.AddSwaggerGen(c =>
 		{
 			c.SwaggerDoc("v1", new OpenApiInfo { Title = "Foreign Exchange Rates API", Version = "v1" });
-			c.OperationFilter<RequiredApiKeyHeaderParameter>();
+			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+			{
+				Name = "Authorization",
+				Type = SecuritySchemeType.ApiKey,
+				Scheme = "Bearer",
+				BearerFormat = "JWT",
+				In = ParameterLocation.Header,
+				Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+			});
+			c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+				{
+					new OpenApiSecurityScheme {
+						Reference = new OpenApiReference {
+							Type = ReferenceType.SecurityScheme,
+								Id = "Bearer"
+						}
+					},
+					new string[] {}
+				}
+			});
 		});
+
+		builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			.AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					ValidIssuer = builder.Configuration["Authentication:Issuer"],
+					ValidateAudience = true,
+					ValidAudience = builder.Configuration["Authentication:Audience"],
+					ValidateLifetime = true,
+					IssuerSigningKey = new SymmetricSecurityKey(
+						Encoding.UTF8.GetBytes(builder.Configuration["Authentication:Token"]!)),
+					ValidateIssuerSigningKey = true
+				};
+			});
+		
 
 		var app = builder.Build();
 
@@ -106,9 +137,9 @@ public class Program
 
 		app.UseHttpsRedirection();
 
-		app.UseAuthorization();
+		app.UseAuthentication();
 
-		app.UseMiddleware<ApiKeyMiddleware>();
+		app.UseAuthorization();
 
 		app.MapControllers();
 

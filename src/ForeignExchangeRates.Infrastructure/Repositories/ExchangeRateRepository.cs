@@ -19,11 +19,6 @@ namespace ForeignExchangeRates.Infrastructure.Repositories
 			return await _dbContext.ExchangeRates.FirstOrDefaultAsync(er => er.SourceCurrencyCode == sourceCurrencyCode && er.TargetCurrencyCode == targetCurrencyCode);
 		}
 
-		public IEnumerable<ExchangeRate> Get(int skip, int take)
-		{
-			return _dbContext.ExchangeRates.OrderBy(er => er.SourceCurrencyCode).ThenBy(er => er.TargetCurrencyCode).Skip(skip).Take(take);
-		}
-
 		public async Task InsertAsync(ExchangeRate exchangeRate)
 		{
 			await _dbContext.AddAsync(exchangeRate);
