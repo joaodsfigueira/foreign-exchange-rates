@@ -30,4 +30,5 @@ public class AppDbContext : DbContext
 	}
 
     public DbSet<ExchangeRate> ExchangeRates { get; set; }
+	public DbSet<User> Users { get; set; }
 }

@@ -3,6 +3,7 @@ using ForeignExchangeRates.Core.Entities;
 using ForeignExchangeRates.Core.Interfaces;
 using ForeignExchangeRates.Core.Services;
 using ForeignExchangeRates.WebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -11,6 +12,7 @@ namespace ForeignExchangeRates.WebAPI.Controllers;
 [ApiVersion("1.0")]
 [ApiController]
 [Route("api/v{version:apiVersion}/exchange-rates")]
+[Authorize]
 public class ExchangeRateController : ControllerBase
 {
 	private readonly IExchangeRateRepository _exchangeRateRepository;
